@@ -1,0 +1,13 @@
+---
+
+- hosts: Linux
+  become: yes
+  tasks:
+    - name: Update packages list
+      apt: update_cache=yes
+      when: ansible_os_family == 'Debian'
+
+    - name: Install package(s)
+      apt: name="{{ package }}" state=present
+      when: ansible_os_family == 'Debian'
+
