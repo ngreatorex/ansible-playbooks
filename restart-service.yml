@@ -1,0 +1,9 @@
+
+---
+- hosts: Linux 
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: "restart {{ service }}"
+      service: name="{{ service }}" state=restarted
+
