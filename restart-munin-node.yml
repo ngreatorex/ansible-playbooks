@@ -1,0 +1,9 @@
+
+---
+- hosts: linux
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: restart munin-node
+      service: name=munin-node state=restarted
+
