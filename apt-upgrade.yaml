@@ -5,8 +5,8 @@
 
   tasks:
     - name: apt update
-      ansible.builtin.apt:
-        update_cache: yes
+      ansible.builtin.shell:
+        cmd: apt-get update
       ignore_errors: true
       register: apt_update_out
 
