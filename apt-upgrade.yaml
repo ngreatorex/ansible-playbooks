@@ -8,6 +8,7 @@
       ansible.builtin.apt:
         upgrade: dist
         update_cache: yes
+      register: apt_out
 
     - name: Check if a reboot is required.
       ansible.builtin.stat:
@@ -22,3 +23,6 @@
     - name: Remove dependencies that are no longer required.
       ansible.builtin.apt:
         autoremove: yes
+
+    - debug: msg="{{ apt_out.stdout_lines }}"
+      when: apt_out.stdout_lines is defined
