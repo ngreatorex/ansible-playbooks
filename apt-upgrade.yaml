@@ -12,8 +12,8 @@
 
     - name: Debug output
       ansible.builtin.debug: 
-        msg: "{{ apt_update_out.stdout_lines }}"
-      when: apt_update_out.stdout_lines is defined
+        msg: "{{ apt_update_out }}"
+      when: apt_update_out is defined
 
     - name: Fail always
       ansible.builtin.fail:
