@@ -4,11 +4,15 @@
   become: yes
 
   tasks:
+    - name: apt update
+      ansible.builtin.apt:
+        update_cache: yes
+      register: apt_update_out
+
     - name: Perform a dist-upgrade.
       ansible.builtin.apt:
         upgrade: dist
-        update_cache: yes
-      register: apt_out
+      register: apt_upgrade_out
 
     - name: Check if a reboot is required.
       ansible.builtin.stat:
@@ -24,5 +28,12 @@
       ansible.builtin.apt:
         autoremove: yes
 
-    - debug: msg="{{ apt_out.stdout_lines }}"
-      when: apt_out.stdout_lines is defined
+    - name: Debug output
+      ansible.builtin.debug: 
+        msg: {{ apt_update_out.stdout_lines }}
+      when: apt_update_out.stdout_lines is defined
+
+    - name: Debug output
+      ansible.builtin.debug: 
+        msg: {{ apt_upgrade_out.stdout_lines }}
+      when: apt_upgrade_out.stdout_lines is defined
