@@ -30,10 +30,10 @@
 
     - name: Debug output
       ansible.builtin.debug: 
-        msg: {{ apt_update_out.stdout_lines }}
+        msg: "{{ apt_update_out.stdout_lines }}"
       when: apt_update_out.stdout_lines is defined
 
     - name: Debug output
       ansible.builtin.debug: 
-        msg: {{ apt_upgrade_out.stdout_lines }}
+        msg: "{{ apt_upgrade_out.stdout_lines }}"
       when: apt_upgrade_out.stdout_lines is defined
