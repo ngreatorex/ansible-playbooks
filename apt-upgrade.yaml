@@ -7,6 +7,7 @@
     - name: apt update
       ansible.builtin.shell:
         cmd: apt-get update
+      timeout: 300
       register: apt_update_out
       failed_when: apt_update_out.stderr_lines is defined
 
@@ -18,6 +19,7 @@
     - name: Perform a dist-upgrade.
       ansible.builtin.shell:
         cmd: apt-get dist-upgrade --auto-remove
+      timeout: 1200
       register: apt_upgrade_out
       failed_when: apt_upgrade_out.stderr_lines is defined
 
