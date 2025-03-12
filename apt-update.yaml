@@ -9,7 +9,7 @@
         cmd: apt-get update
       timeout: 300
       register: apt_update_out
-      failed_when: apt_update_out.stderr_lines is defined
+      failed_when: apt_update_out.stderr_lines | length > 0
 
     - name: Debug output
       ansible.builtin.debug: 
