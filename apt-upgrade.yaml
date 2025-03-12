@@ -11,10 +11,11 @@
       register: apt_update_out
       failed_when: apt_update_out.stderr_lines | length > 0
 
-    - name: Debug output
+    - name: Apt update output
       ansible.builtin.debug: 
-        msg: "{{ apt_update_out.stdout_lines }}"
-      when: apt_update_out.stdout_lines is defined
+        stdout: "{{ apt_update_out.stdout_lines }}"
+        stderr: "{{ apt_update_out.stderr_lines }}"
+      when: apt_update_out is defined
 
     - name: Perform a dist-upgrade.
       ansible.builtin.shell:
@@ -23,8 +24,9 @@
       register: apt_upgrade_out
       failed_when: apt_upgrade_out.stderr_lines | length > 0
 
-    - name: Debug output
+    - name: Apt upgrade output
       ansible.builtin.debug: 
-        msg: "{{ apt_upgrade_out.stdout_lines }}"
-      when: apt_upgrade_out.stdout_lines is defined
+        stdout: "{{ apt_upgrade_out.stdout_lines }}"
+        stderr: "{{ apt_upgrade_out.stderr_lines }}"
+      when: apt_upgrade_out is defined
 
