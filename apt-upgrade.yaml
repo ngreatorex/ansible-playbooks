@@ -19,7 +19,7 @@
     - name: Perform a dist-upgrade.
       ansible.builtin.shell:
         cmd: apt-get dist-upgrade --auto-remove
-      timeout: 1200
+      timeout: 6000
       register: apt_upgrade_out
       failed_when: apt_upgrade_out.stderr_lines | length > 0
 
