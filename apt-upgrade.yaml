@@ -13,8 +13,9 @@
 
     - name: Apt update output
       ansible.builtin.debug: 
-        stdout: "{{ apt_update_out.stdout_lines }}"
-        stderr: "{{ apt_update_out.stderr_lines }}"
+        msg: 
+          - "{{ apt_update_out.stdout_lines }}"
+          - "{{ apt_update_out.stderr_lines }}"
       when: apt_update_out is defined
 
     - name: Perform a dist-upgrade.
@@ -26,7 +27,8 @@
 
     - name: Apt upgrade output
       ansible.builtin.debug: 
-        stdout: "{{ apt_upgrade_out.stdout_lines }}"
-        stderr: "{{ apt_upgrade_out.stderr_lines }}"
+        msg: 
+          - "{{ apt_upgrade_out.stdout_lines }}"
+          - "{{ apt_upgrade_out.stderr_lines }}"
       when: apt_upgrade_out is defined
 
