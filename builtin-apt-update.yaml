@@ -8,15 +8,15 @@
       ansible.builtin.apt:
         update_cache: true
       register: apt_update_out
-      failed_when: apt_update_out.stderr_lines is defined
+      failed_when: apt_update_out.stderr is defined
 
     - name: Debug output
       ansible.builtin.debug: 
-        msg: "{{ apt_update_out.stdout_lines }}"
+        msg: "{{ apt_update_out }}"
       when: apt_update_out is defined
 
     - name: Fail if errors
       ansible.builtin.fail:
-        msg: "{{ apt_update_out.stderr_lines }}"
-      when: apt_update_out.stderr_lines is defined
+        msg: "{{ apt_update_out.stderr }}"
+      when: apt_update_out.stderr is defined
 
