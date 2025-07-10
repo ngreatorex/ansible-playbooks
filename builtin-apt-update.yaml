@@ -1,0 +1,22 @@
+---
+- hosts: all
+  gather_facts: no
+  become: yes
+
+  tasks:
+    - name: apt update
+      ansible.builtin.apt:
+        update_cache: true
+      register: apt_update_out
+      failed_when: apt_update_out.stderr_lines is defined
+
+    - name: Debug output
+      ansible.builtin.debug: 
+        msg: "{{ apt_update_out.stdout_lines }}"
+      when: apt_update_out is defined
+
+    - name: Fail if errors
+      ansible.builtin.fail:
+        msg: "{{ apt_update_out.stderr_lines }}"
+      when: apt_update_out.stderr_lines is defined
+
