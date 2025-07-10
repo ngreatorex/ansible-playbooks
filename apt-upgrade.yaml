@@ -1,0 +1,33 @@
+---
+- hosts: all
+  gather_facts: no
+  become: yes
+
+  tasks:
+    - name: apt update
+      ansible.builtin.shell:
+        cmd: apt-get update
+      timeout: 300
+      register: apt_update_out
+
+    - name: Apt update output
+      ansible.builtin.debug: 
+        msg: 
+          - "{{ apt_update_out.stdout_lines }}"
+          - "{{ apt_update_out.stderr_lines }}"
+      when: apt_update_out is defined
+      failed_when: apt_update_out.stderr_lines | length > 0
+
+    - name: Perform a dist-upgrade.
+      ansible.builtin.shell:
+        cmd: DEBIAN_FRONTEND="noninteractive" apt-get dist-upgrade -o Dpkg::Options::="--force-confold" --auto-remove --yes
+      timeout: 6000
+      register: apt_upgrade_out
+
+    - name: Apt upgrade output
+      ansible.builtin.debug: 
+        msg: 
+          - "{{ apt_upgrade_out.stdout_lines }}"
+          - "{{ apt_upgrade_out.stderr_lines }}"
+      when: apt_upgrade_out is defined
+      failed_when: apt_upgrade_out.stderr_lines | length > 0

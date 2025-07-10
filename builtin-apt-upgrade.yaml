@@ -1,0 +1,33 @@
+---
+- hosts: all
+  gather_facts: no
+  become: yes
+  become_method: sudo
+
+  tasks:
+    - name: apt-get dist-upgrade --auto-remove
+      ansible.builtin.apt:
+        upgrade: dist
+        autoremove: yes
+      register: apt_upgrade_out
+    
+    - name: apt-get output
+      ansible.builtin.debug: 
+        msg: "{{ apt_upgrade_out.stdout.split('\n') }}"
+      when: apt_upgrade_out.stdout is defined
+
+    - name: apt-get errors
+      ansible.builtin.fail:
+        msg: "{{ apt_upgrade_out.stderr.split('\n') }}"
+      when: apt_upgrade_out.stderr | length > 0
+
+    - name: Check if a reboot is required
+      ansible.builtin.stat:
+        path: /var/run/reboot-required
+        get_checksum: no
+      register: reboot_required_file
+
+    - name: Reboot
+      ansible.builtin.reboot:
+      when: reboot_required_file.stat.exists == true
+
